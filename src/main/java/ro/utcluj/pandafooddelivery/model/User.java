@@ -17,6 +17,7 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 public class User implements UserDetails {
+
     @Id
     @SequenceGenerator(name = "user_sequence",
             sequenceName = "user_sequence", allocationSize = 1)

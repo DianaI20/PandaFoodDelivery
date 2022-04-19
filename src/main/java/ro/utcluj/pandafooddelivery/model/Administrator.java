@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class Administrator extends User{
 
 
-    public Administrator(String firstName, String lastName, String email, String password, String phoneNumber,Restaurant restaurant) {
+    public Administrator(String firstName, String lastName, String email, String password, String phoneNumber) {
         super(firstName, lastName, email, password, phoneNumber, UserType.ADMINISTRATOR);
      }
 

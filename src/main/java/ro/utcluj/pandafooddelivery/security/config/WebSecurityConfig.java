@@ -21,13 +21,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http.cors().and().csrf().disable();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(daoAuthenticationProvider());
-    }
+        auth
+                .inMemoryAuthentication()
+                .withUser("user").password("password").roles("ADMIN");    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
