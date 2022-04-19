@@ -1,6 +1,7 @@
 package ro.utcluj.pandafooddelivery.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +11,7 @@ import ro.utcluj.pandafooddelivery.model.User;
 import ro.utcluj.pandafooddelivery.repository.UserRepository;
 import ro.utcluj.pandafooddelivery.service.exception.WrongPasswordException;
 
+import java.net.http.HttpResponse;
 import java.util.Optional;
 
 @Service
@@ -22,7 +24,7 @@ public class UserService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public User loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MESSAGE, email)));
     }
 
@@ -40,7 +42,7 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public String signUpUser(User user){
+    public ResponseEntity signUpUser(User user){
         boolean userExists = userRepository.findByEmail(user.getUsername()).isPresent();
         if(userExists){
             throw new IllegalStateException("Email already taken");
@@ -49,6 +51,6 @@ public class UserService implements UserDetailsService {
         user.setPassword(encodedPassword);
         userRepository.save(user);
         // TODO  : send confirmation token
-        return "it works";
+        return ResponseEntity.ok().build();
     }
 }

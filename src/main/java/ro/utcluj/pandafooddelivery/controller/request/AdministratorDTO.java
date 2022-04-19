@@ -9,13 +9,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class CustomerRegistrationRequest {
+public class AdministratorDTO {
 
     private final String firstName;
     private final String lastName;
     private final String email;
     private final String phoneNumber;
     private final String password;
-    private final String address;
+    private final String restaurantName;
+    private final String restaurantLocation;
+    private final String deliveryZone;
 
 }

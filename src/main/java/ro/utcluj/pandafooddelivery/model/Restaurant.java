@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,13 +28,17 @@ public class Restaurant {
     private Administrator administrator;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<FoodItem> foodItems;
 
-    public Restaurant(String name, String location, String deliveryZones) {
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Order> orders;
+
+
+    public Restaurant(String name, String location, String deliveryZones, Administrator administrator) {
         this.name = name;
         this.location = location;
         this.deliveryZones = deliveryZones;
+        this.administrator =administrator;
     }
 
 
