@@ -1,12 +1,9 @@
-package ro.utcluj.pandafooddelivery.controller.request;
+package ro.utcluj.pandafooddelivery.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import ro.utcluj.pandafooddelivery.model.Restaurant;
 import ro.utcluj.pandafooddelivery.model.UserType;
-
-import java.util.List;
 
 @Getter
 @Setter

@@ -3,11 +3,8 @@ package ro.utcluj.pandafooddelivery.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,15 +13,17 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Restaurant {
+
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
     private String name;
     private String location;
     private String deliveryZones;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Administrator administrator;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
@@ -38,8 +37,13 @@ public class Restaurant {
         this.name = name;
         this.location = location;
         this.deliveryZones = deliveryZones;
-        this.administrator =administrator;
+        this.administrator = administrator;
     }
 
-
+    public Restaurant(String name, String location, String deliveryZones) {
+        this.name = name;
+        this.location = location;
+        this.deliveryZones = deliveryZones;
+        this.administrator = administrator;
+    }
 }

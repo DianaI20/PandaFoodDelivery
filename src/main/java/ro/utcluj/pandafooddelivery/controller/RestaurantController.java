@@ -1,70 +1,65 @@
 package ro.utcluj.pandafooddelivery.controller;
 
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ro.utcluj.pandafooddelivery.controller.request.FoodItemDTO;
-import ro.utcluj.pandafooddelivery.model.*;
+import ro.utcluj.pandafooddelivery.controller.dto.FoodItemDTO;
+import ro.utcluj.pandafooddelivery.service.FoodItemService;
 import ro.utcluj.pandafooddelivery.service.RestaurantService;
-import ro.utcluj.pandafooddelivery.service.validators.FoodItemController;
 
 import javax.management.InstanceNotFoundException;
-import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping(path = "/restaurant")
 @AllArgsConstructor
 public class RestaurantController {
 
+
     private RestaurantService restaurantService;
-    private UserController userController;
-    private FoodItemController foodItemController;
+    private FoodItemService foodItemService;
 
     @GetMapping(path = "/menu")
-    public ResponseEntity getRestaurantMenu(@RequestParam Long id)  {
-        return restaurantService.getFoodItems(id);
+    public ResponseEntity findFoodItems(@RequestParam(value = "id") Long id) {
+        log.info("It works fine");
+        return restaurantService.findAllFoodItems(id);
     }
 
     @GetMapping(path = "/all")
-    public ResponseEntity getAllRestaurants()  {
+    public ResponseEntity findAll() {
+
         try {
-            return restaurantService.getAllRestaurants();
+            return restaurantService.findAll();
         } catch (InstanceNotFoundException e) {
-            e.printStackTrace();
+            log.error("Instance not found.");
             return ResponseEntity.notFound().build();
         }
     }
 
-    public List<Restaurant> getRestaurantByName(String name) throws InstanceNotFoundException {
-        return restaurantService.getRestaurantByName(name);
-    }
-
     @GetMapping("/id")
-    public ResponseEntity getRestaurantById(@RequestParam Long id){
+    public ResponseEntity findById(@RequestParam Long id) {
         return restaurantService.findById(id);
     }
 
     @GetMapping("/admin")
-    public ResponseEntity getRestaurantByAdministrator(@RequestParam String email){
-        User admin = userController.getUserByEmail(email);
-        System.out.println(admin);
-        ResponseEntity r = restaurantService.findByAdministrator(admin);
-        return r;
+    public ResponseEntity findByAdministratorEmail(@RequestParam String email) {
+        return restaurantService.findByAdministrator(email);
     }
+
     @PostMapping("/add/food")
-        public ResponseEntity addNewFoodItem(@RequestBody FoodItemDTO foodItemDTO){
-        return  foodItemController.addNewFoodItem(foodItemDTO);
+    public ResponseEntity saveFoodItem(@RequestBody FoodItemDTO foodItemDTO) {
+        return foodItemService.save(foodItemDTO);
     }
 
-    @DeleteMapping("/remove/food")
-    public ResponseEntity removeFoodItem(@RequestParam Long id){
-        return foodItemController.removeFoodItem(id);
+    @PostMapping("/remove/food")
+    public ResponseEntity deleteFoodItem(@RequestBody FoodItemDTO foodItemDTO) {
+        return foodItemService.deleteById(foodItemDTO.getFoodId());
     }
 
 
-
-
-
+    @PostMapping("/export")
+    public ResponseEntity exportPDF(@RequestParam(value = "id") Long id ) {
+        return restaurantService.exportPDF(id);
+    }
 }

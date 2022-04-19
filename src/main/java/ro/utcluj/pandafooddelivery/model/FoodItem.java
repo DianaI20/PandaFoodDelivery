@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,11 +16,14 @@ import java.util.List;
 @AllArgsConstructor
 public class FoodItem {
 
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String foodName;
+    @Column(name = "name")
+    private String name;
+
     @ManyToOne
     @JoinColumn(name = "restaurant_id") // name that will appear in the table
     private Restaurant restaurant;
@@ -34,11 +36,17 @@ public class FoodItem {
     @ManyToMany(mappedBy = "foodItems", cascade = CascadeType.REMOVE)
     private List<Order> orders;
 
+
     public FoodItem(Long id, String foodName, Restaurant restaurant, FoodCategory category, float price) {
         this.id = id;
-        this.foodName = foodName;
+        this.name = foodName;
         this.restaurant = restaurant;
         this.category = category;
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

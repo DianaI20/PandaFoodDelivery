@@ -1,14 +1,15 @@
 package ro.utcluj.pandafooddelivery;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import ro.utcluj.pandafooddelivery.controller.registration.LoginController;
+
+import java.util.Properties;
 
 @SpringBootApplication
 public class PandaFoodDeliveryApplication {
@@ -16,8 +17,9 @@ public class PandaFoodDeliveryApplication {
     public static void main(String[] args) {
         SpringApplication.run(PandaFoodDeliveryApplication.class, args);
     }
+
     @Bean
-    public WebMvcConfigurer corsConfigurer(){
+    public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
@@ -27,5 +29,6 @@ public class PandaFoodDeliveryApplication {
             }
         };
     }
+
 
 }

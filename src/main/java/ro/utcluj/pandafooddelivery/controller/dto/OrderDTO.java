@@ -1,4 +1,4 @@
-package ro.utcluj.pandafooddelivery.controller.request;
+package ro.utcluj.pandafooddelivery.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

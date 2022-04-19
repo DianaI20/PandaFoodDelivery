@@ -1,6 +1,5 @@
-package ro.utcluj.pandafooddelivery.controller.request;
+package ro.utcluj.pandafooddelivery.controller.dto;
 
-import jdk.jfr.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

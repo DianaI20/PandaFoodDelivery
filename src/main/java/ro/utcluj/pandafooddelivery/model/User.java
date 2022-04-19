@@ -1,4 +1,5 @@
 package ro.utcluj.pandafooddelivery.model;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,20 +19,31 @@ import java.util.Collection;
 @NoArgsConstructor
 public class User implements UserDetails {
 
+
     @Id
     @SequenceGenerator(name = "user_sequence",
             sequenceName = "user_sequence", allocationSize = 1)
-    @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phoneNumber;
-    private String password;
-
 
     @Enumerated(EnumType.STRING)
     private UserType userType;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
+
+    @Column(nullable = false, unique = true)
+    private String phoneNumber;
+
+    @Column(nullable = false)
+    private String password;
+
 
     public User(String firstName, String lastName, String email, String password, String phoneNumber, UserType userType) {
         this.firstName = firstName;
